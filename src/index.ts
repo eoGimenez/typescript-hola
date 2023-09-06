@@ -53,3 +53,72 @@ let tupla2: [number, string[]] = [2, ["carrot", "feliz", "gatito"]]
 // tupla.push("odqndoq") Cuidado con el push porque es un bug que no lo detecta como error de tipado
 
 
+enum Talla {Chica, Mediana, Grande, ExtraGrande}
+//             0       1        2        3
+// Por defecto les da valores como index.
+
+enum TallaS {Chica = 'S', Meidana = 'M', Grande = 'L', ExtraGrande = 'XL'}
+// cuando definimos datos a los enums, tenemos que asignarle a todos las variables
+
+const medianoNum = Talla.Mediana
+const medianoS = TallaS.Meidana
+
+console.log(medianoNum)
+console.log(medianoS)
+
+
+// creando el enum con "const" evitamos que compile codigo adicional generando un codigo de .js mas limpio, de esta forma
+// se ejecuta el enum solo cuando se asigna un valor o se usa un valor, pero sin necesidad de generar el IFEE en el .js
+// codigo mas reducido y optimizado.
+const enum LoadingState { Idle, Loading, Success, Error }
+
+const estado = LoadingState.Success
+
+type Direccion = 
+        {
+            numero: number,
+            calle: string,
+            pais: string
+        }
+
+type Persona = {
+    readonly id: number, // readonly es para que esa propiedad sea solo lectura
+    nombre?: string, // el "?" despues del nombre de la propiedad es para que no sea obligatorio de asignar cuando se crea el objero
+    talla: TallaS, // usamos el enum que creamos previamente como tipo de una propiedad
+    direccion: Direccion
+}
+
+
+const objeto: Persona = { 
+    id: 1,
+    talla: TallaS.Chica,
+    direccion: {
+        numero: 4,
+        calle: "Gran via",
+        pais: "Spain"
+    }
+ }
+
+ const arregloPersonas: Persona[] = []
+
+
+ const fun: (a: number) => string = (edad: number) => {
+    if (edad > 17) return "Puedes pasar"
+    return "NO puede pasar"
+ }
+
+ function validadEdad(edad: number, msg: string = "Hola"): string {
+    if (edad > 17) return `Puedes pasar ${msg}`
+    return "NO puedes pasar"
+ }
+
+//  validadEdad(19, 22)
+validadEdad(10)
+validadEdad(19, "22")
+
+
+// El tipo "never" se usa cuando una funcion va a arrojar un error, por lo tanto no va a ejecutar o escribir nada,
+// evitar usar el tipo "void" para este tipo de funciones
+const ErrorUsuario: () => never = () => {
+    throw new Error('error de usuario')
+}
