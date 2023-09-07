@@ -22,6 +22,9 @@ class ProductStore extends BasicData {
     get fullDesc() {
         return `Product: ${super.fullDesc}`;
     }
+    save() {
+        console.log('savind...');
+    }
 }
 class Category extends BasicData {
     constructor(name, desc, created_at, created_by) {
@@ -33,6 +36,9 @@ class Category extends BasicData {
     }
     get fullDesc() {
         return `Category - ${super.fullDesc}`;
+    }
+    save() {
+        console.log('savind...');
     }
 }
 let product1 = new ProductStore(100, 1, 'iPhone', 'Este es un smartphone', new Date(), 1);
