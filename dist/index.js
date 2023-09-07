@@ -108,7 +108,7 @@ const user2 = {
 console.log(user2);
 const Narrow = (n) => {
     if (typeof n === 'number') {
-        return n.toLocaleString();
+        return n.toString();
     }
     if (typeof n === 'string') {
         return n.toUpperCase();
