@@ -122,3 +122,46 @@ validadEdad(19, "22")
 const ErrorUsuario: () => never = () => {
     throw new Error('error de usuario')
 }
+
+type Animal = {
+    id: number,
+    estado: string
+}
+
+type Usuario = {
+    id: number,
+    name: string
+}
+
+let animal: Usuario | Animal = {
+    id: 1,
+    estado: '',
+    name: '' // cuando usamos Union type, no necesiramente hay que definir todas las propiedades
+}
+
+// usando Union type, para armar funciones nos da la posibilidad, a la hora de usar condicionales,
+// aislar los tipos de metodos que podamos aplicarle a las variables
+// en el ejemplo siguiente si dentro del condicional typeof === number usara metodos, solo aparecerias los metodos de numbers y asi con cualquier otro type
+// si no usamos condicional, nos ofrece solos los metodos que tengan en comuno los tipos Union
+const sumaDos : (a: number | string) => number = (n: string | number) => {
+    if (typeof n === 'number') return n + 2
+    return parseInt(n) +2 
+}
+
+type Audit = {
+    created_at: string,
+    modified_at: string
+}
+
+type Product = {
+    name: string
+}
+
+// los interseptions types son definidos con "&" a la hora de asignar tipos y son para especificar que queremos que todas las propiedades de los tipos
+// interceptados se usen obligatoriamente, a diferencia de Unions que pueden o no tener todos los tipos
+const product: Audit & Product = {
+    created_at: '',
+    modified_at: '',
+    name: ''
+}
+
