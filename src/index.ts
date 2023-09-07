@@ -139,6 +139,8 @@ let animal: Usuario | Animal = {
     name: '' // cuando usamos Union type, no necesiramente hay que definir todas las propiedades
 }
 
+
+// Union type
 // usando Union type, para armar funciones nos da la posibilidad, a la hora de usar condicionales,
 // aislar los tipos de metodos que podamos aplicarle a las variables
 // en el ejemplo siguiente si dentro del condicional typeof === number usara metodos, solo aparecerias los metodos de numbers y asi con cualquier otro type
@@ -157,6 +159,7 @@ type Product = {
     name: string
 }
 
+//Interseption Type
 // los interseptions types son definidos con "&" a la hora de asignar tipos y son para especificar que queremos que todas las propiedades de los tipos
 // interceptados se usen obligatoriamente, a diferencia de Unions que pueden o no tener todos los tipos
 const product: Audit & Product = {
@@ -164,4 +167,93 @@ const product: Audit & Product = {
     modified_at: '',
     name: ''
 }
+
+//Literal Types
+// Los tipos literales son para especificar que valor quiero que contenga una variable, ya no solo es una cuestion de tipo, sino que especificamente el valor en si
+type Fibo = 0 | 1 | 2 | 3 | 5 
+
+const nDeFibo: Fibo = 2
+
+
+// Nullable type
+// asignando controles Union para los valores nulls y undefineds, podemos controlar que llegue a enviar esos valores a las funciones,
+// aunque tenemos que agregar logica para manejar que sucede cuando se llama a la funcion sin valor
+const toNumber:(a: string | null | undefined) => number = (s: string | null | undefined) => {
+    if (!s){
+        return 0
+    }
+    return parseInt(s)
+}
+
+const n = toNumber(null)
+const m = toNumber(undefined)
+
+// Optional chaining
+// el "?" hace una validacion de si el objeto/array existe
+type User = {
+    id: number,
+    name: string,
+    created_at: Date
+}
+const getUser: (n: number) => User | null = (id: number) => {
+    if (id < 0) {
+        return null
+    }
+    let user: User = {
+        id: id,
+        name: 'Carrot',
+        created_at: new Date()
+    }
+    return user
+}
+
+const user = getUser(1)
+console.log(user?.created_at)
+
+const arr1 = null
+console.log(arr1?.[0])
+
+const fn5: any = null
+console.log(fn5?.())
+
+
+// Nullish coalescing operator
+// Cuando el valor de 0 o una '' es un valor util para nosotros tenemos que usar el "??" para hacer comparaciones de valores
+// sobre todo cuado sepamos que nuestro codigo va a crecer y no tenemos bien definidas las futuras features
+
+const dificulty : number | null = 0
+
+const user2 = {
+    name: "Carrot",
+    dificulty: dificulty ?? 1 // Si usamos "dificulty || 1" cuando pasemos valor de 0 nos va a asigar 1 y nosotros queremos usar el valor de 0 como parametro valido 
+}
+
+console.log(user2)
+
+// Type assetion
+// hay que evitar su uso, pero es para cuando estamos 100% seguros del tipo de dato que vamos a recibir
+// y nuestro compilador no nos ofrece sus metodos
+// justo luego del "=" definimos el <Type assetion>
+
+// const input = <HTMLInputElement> document.getElementById('username') // as HTMLInputElement -- tambien se puede usar el "as" al final de la definicion de la variable
+
+// input.value
+// input.onchange
+
+// Type narrowing
+// es cuando utilizmos condicionales para llevar a una funcion a hacer distintas cosas dependiendo el tipo de dato que tengamos
+const Narrow : (a: number | string | null | undefined ) => number | string | null | undefined = (n: string | number | null | undefined) => {
+    if (typeof n === 'number') {
+        return n.toString()
+    }
+    if (typeof n === 'string') {
+        return n.toUpperCase()
+    } 
+    return n
+}
+
+const test = Narrow(null)
+
+console.log(test)
+console.log(typeof(test))
 
